@@ -9,7 +9,7 @@ body {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     height: 100%;
     margin: 0;
-    background-image: url('/IMG/Bck.jpg');
+    background-image: url("Bck.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -42,10 +42,11 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: rgb(251, 251, 251);
 }
 
 label {
+    color: #ffffff;
     display: block;
     margin-bottom: 8px;
 }
@@ -61,26 +62,19 @@ select {
 }
 
 button {
+    color: #000000;
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #ffd60a;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #ffc300;
 }
 
-#exchangeRate,
-#result {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 16px;
-    font-weight: bold;
+button:active {
+    transform: scale(0.95);
 }
