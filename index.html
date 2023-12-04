@@ -4,38 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Конвертер валют</title>
+    <title>Калькулятор автокредита</title>
     <link rel="stylesheet" href="CSS/styles.css">
 </head>
-
+ 
 <body>
     <div class="wrapper">
-        <h1>Конвертер валют</h1>
+        <h1>Калькулятор автокредита</h1>
 
-        <label for="amount">Сумма:</label>
-        <input type="number" id="amount" placeholder="Введите сумму" required>
+        <label for="loanAmount">Сумма кредита:</label>
+        <input type="number" id="loanAmount" placeholder="Введите сумму кредита" required>
 
-        <label for="fromCurrency">Из валюты:</label>
-        <select id="fromCurrency">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="RUB">RUB</option>
+        <label for="interestRate">Процентная ставка (%):</label>
+        <input type="number" id="interestRate" placeholder="Введите процентную ставку" required>
+
+        <label for="loanTerm">Срок кредита (месяцев):</label>
+        <input type="number" id="loanTerm" placeholder="Введите срок кредита" required>
+
+        <label for="paymentType">Вид платежа:</label>
+        <select onchange="selectionLet()" id="paymentType">
+            <option value="annuity">Аннуитетный</option>
+            <option value="differentiated">Дифференцированный</option>
         </select>
 
-        <label for="toCurrency">В валюту:</label>
-        <select id="toCurrency">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="RUB">RUB</option>
-        </select>
-
-        <label for="exchangeRate">Курс валюты:</label>
-        <input type="text" id="exchangeRate" readonly>
-
-        <button onclick="calculateExchange()">Рассчитать</button>
+        <button onclick="calculateLoan()">Рассчитать</button>
         <br><br>
-        <label for="result">Результат:</label>
-        <input type="text" id="result" readonly>
+        <label id="output" for="monthlyPayment">Ежемесячный платеж составит:</label>
+        <input type="text" id="monthlyPayment" readonly>
 
         <button onclick="clearFields()">Очистить</button>
     </div>
