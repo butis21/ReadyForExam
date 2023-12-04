@@ -1,68 +1,42 @@
-function calculateExchange() {
-    const amount = parseFloat(document.getElementById('amount').value);
-    const fromCurrency = document.getElementById('fromCurrency').value;
-    const toCurrency = document.getElementById('toCurrency').value;
+function calculateLoan() {
+    const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+    const interestRate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+    const loanTerm = parseFloat(document.getElementById('loanTerm').value);
+    const paymentType = document.getElementById('paymentType').value;
+    const label = document.getElementById('output');
 
-    if (isNaN(amount) || amount <= 0 || fromCurrency === toCurrency) {
-        alert('Пожалуйста, введите корректные значения для конвертации.');
+    if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTerm) || loanAmount <= 0 || interestRate <= 0 || loanTerm <= 0) {
+        alert('Пожалуйста, введите корректные значения для всех полей.');
         return;
     }
 
-    let exchangeRate = getExchangeRate(fromCurrency, toCurrency);
+    let monthlyPayment;
 
-    document.getElementById('exchangeRate').value = exchangeRate.toFixed(2);
+    if (paymentType === 'annuity') {
+        monthlyPayment = (loanAmount * interestRate) / (1 - Math.pow(1 + interestRate, -loanTerm));
+    } else {
+        label.innerHTML = "Ежемесячный платеж за последний месяц составит:";
+        monthlyPayment = loanAmount / loanTerm + loanAmount * (1 - (loanTerm - 1) / loanTerm) * interestRate;
+    }
 
-    const result = amount * exchangeRate;
-    document.getElementById('result').value = result.toFixed(2);
+    document.getElementById('monthlyPayment').value = Math.round(monthlyPayment);
+}
+
+function selectionLet() {
+    const paymentType = document.getElementById('paymentType').value;
+    const label = document.getElementById('output');
+
+    if (paymentType === 'annuity') {
+        label.innerHTML = "Ежемесячный платеж составит:";
+    } else {
+        label.innerHTML = "Ежемесячный платеж за последний месяц составит:";
+    } 
 }
 
 function clearFields() {
-    document.getElementById('amount').value = '';
-    document.getElementById('exchangeRate').value = '';
-    document.getElementById('result').value = '';
-}
-
-// с сайта https://bankiros.ru/convert
-function getExchangeRate(fromCurrency, toCurrency) {
-    switch (fromCurrency) {
-        case 'USD':
-            switch (toCurrency) {
-                case 'EUR':
-                    return 0.91;
-                case 'RUB':
-                    return 88.61;
-            }
-            break;
-        case 'EUR':
-            switch (toCurrency) {
-                case 'USD':
-                    return 1.1;
-                case 'RUB':
-                    return 97.07;
-            }
-            break;
-        case 'RUB':
-            switch (toCurrency) {
-                case 'USD':
-                    return 0.01;
-                case 'EUR':
-                    return 0.01;
-            }
-            break;
-        default:
-            alert('Неподдерживаемая валюта.');
-            return 0;
-    }
-}
-
-document.getElementById('fromCurrency').addEventListener('change', updateExchangeRate);
-document.getElementById('toCurrency').addEventListener('change', updateExchangeRate);
-
-function updateExchangeRate() {
-    const fromCurrency = document.getElementById('fromCurrency').value;
-    const toCurrency = document.getElementById('toCurrency').value;
-
-    let exchangeRate = getExchangeRate(fromCurrency, toCurrency);
-
-    document.getElementById('exchangeRate').value = exchangeRate.toFixed(2);
+    document.getElementById('loanAmount').value = '';
+    document.getElementById('interestRate').value = '';
+    document.getElementById('loanTerm').value = '';
+    document.getElementById('paymentType').value = 'annuity';
+    document.getElementById('monthlyPayment').value = '';
 }
